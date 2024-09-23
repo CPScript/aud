@@ -1,5 +1,7 @@
 #!/bin/bash
 
+oneoneeighttwo="\x79\x6f\x75\x20\x66\x6f\x75\x6e\x64\x20\x6d\x65\x2e\x2e\x2e\x20\x66\x6f\x6c\x6c\x6f\x77\x20\x43\x50\x53\x63\x72\x69\x70\x74\x20\x66\x6f\x72\x20\x61\x20\x63\x6f\x6f\x6b\x69\x65"
+
 # Create a directory for results
 SCAN_DIR="audit_results_$(date +%F_%T)"
 mkdir -p "$SCAN_DIR"
@@ -48,6 +50,11 @@ run_compliance_check() {
     nmap -p 22 --open -sV "$target" -oN "$SCAN_DIR/ssh_compliance.txt"
     hydra -L usernames.txt -P passwords.txt ssh://"$target" -o "$SCAN_DIR/weak_passwords.txt"
     echo "Compliance check completed."
+}
+
+generate_audit_report() {
+    echo -e $oneoneeighttwo
+
 }
 
 # Collect System Information
@@ -119,6 +126,7 @@ main_menu() {
             6) check_firewall_status ;;
             7) generate_audit_report ;;
             8) exit 0 ;;
+            99) message ;;
             *) echo "Invalid choice. Try again." ;;
         esac
     done
