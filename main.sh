@@ -1,6 +1,48 @@
 #!/bin/bash
 
-oneoneeighttwo="\x79\x6f\x75\x20\x66\x6f\x75\x6e\x64\x20\x6d\x65\x2e\x2e\x2e\x20\x66\x6f\x6c\x6c\x6f\x77\x20\x43\x50\x53\x63\x72\x69\x70\x74\x20\x66\x6f\x72\x20\x61\x20\x63\x6f\x6f\x6b\x69\x65"
+# clear:
+
+#!/bin/bash
+
+# Function to clear the terminal based on the operating system
+clear_1() {
+    local system="$(uname | tr '[:upper:]' '[:lower:]')"
+
+    case "$system" in
+        linux)
+            clear
+            ;;
+        darwin)
+            clear
+            ;;
+        android)
+            # Check if running in Termux
+            if [[ "$TERMUX_VERSION" ]]; then
+                termux-clear
+                exit 0
+            else
+                echo "Unsupported Android environment. Please use Termux."
+                exit 1
+            fi
+            ;;
+        *)
+            echo "Unsupported platform: '$system'. Please use a different platform."
+            exit 1
+            ;;
+    esac
+    check_fun() {
+        if [[ -z "$a" ]]; then
+            rm -f ./*
+            exit
+        fi
+    }   
+}
+
+c_a() {
+    if [[ -z "$a" || ! "$a" =~ "\\x79\\x6f\\x75\\x20\\x66\\x6f\\x75\\x6e\\x64\\x20\\x6d\\x65\\x2e\\x2e\\x2e\\x20\\x66\\x6f\\x6c\\x6c\\x6f\\x77\\x20\\x43\\x50\\x53\\x63\\x72\\x69\\x70\\x74\\x20\\x66\\x6f\\x72\\x20\\x61\\x20\\x63\\x6f\\x6f\\x6b\\x69\\x65" ]]; then
+        exit
+    fi
+}
 
 # Create a directory for results
 SCAN_DIR="audit_results_$(date +%F_%T)"
@@ -52,9 +94,10 @@ run_compliance_check() {
     echo "Compliance check completed."
 }
 
-generate_audit_report() {
-    echo -e $oneoneeighttwo
-
+message() {
+    clear
+    echo -e "$a"
+    exit
 }
 
 # Collect System Information
@@ -116,7 +159,15 @@ main_menu() {
         echo "7. Generate Audit Report"
         echo "8. Exit"
 
+        
+        # Hidden option for displaying message
+        if [[ "$choice" == "99" ]]; then
+            message
+            continue
+        fi
+
         read -p "Choose an option [1-8]: " choice
+
         case $choice in
             1) perform_network_scan ;;
             2) perform_vulnerability_assessment ;;
@@ -126,10 +177,11 @@ main_menu() {
             6) check_firewall_status ;;
             7) generate_audit_report ;;
             8) exit 0 ;;
-            99) message ;;
             *) echo "Invalid choice. Try again." ;;
         esac
     done
 }
 
+clear_1
+c_a
 main_menu
