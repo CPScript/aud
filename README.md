@@ -10,7 +10,7 @@ This Bash script is designed to perform a detailed system audit, allowing users 
 - **Firewall Status Check**: Reports the status of the firewall using `ufw`.
 - **Audit Report Generation**: Compiles all findings into a neatly formatted report.
 
-## Prerequisites
+## required dependencies 
 
 Before running the script, ensure you have the following tools installed on your system:
 
