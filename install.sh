@@ -29,14 +29,20 @@ uninstall() {
     fi
 }
 
-echo "[1] Install required packages"
-echo "[2] Un-install required packages"
-echo "[99] exit"
+main() {
+    echo "[1] Install required packages"
+    echo "[2] Un-install required packages"
+    echo "[99] exit"
 
-read -p "Choose [1/2]: " choice
+    read -p "Choose [1/2]: " choice
 
-case $choice in
-            1) install ;;
-            2) uninstall ;;
-            99) exit 0 ;;
-esac
+    case $choice in
+                1) install ;;
+                2) uninstall ;;
+                99) exit 0 ;;
+    esac
+}
+
+
+clear
+main
