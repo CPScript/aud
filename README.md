@@ -1,7 +1,3 @@
-# System Audit
-
-## Overview
-
 This Bash script is designed to perform a detailed system audit, allowing users to assess network security, check for vulnerabilities, and verify compliance with security policies. The script organizes the results into a structured directory, making it easy to review findings.
 
 ## Features
