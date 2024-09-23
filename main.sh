@@ -4,40 +4,47 @@
 SCAN_DIR="audit_results_$(date +%F_%T)"
 mkdir -p "$SCAN_DIR"
 
+# Error handling function
+handle_error() {
+    local message="$1"
+    echo "Error: $message" | tee -a "$SCAN_DIR/error_log.txt"
+    exit 1
+}
+
 # Check if a command is installed
 check_command() {
-    command -v "$1" &> /dev/null || { echo "Error: $1 is not installed."; return 1; }
+    command -v "$1" &> /dev/null || handle_error "$1 is not installed."
 }
 
 # Prompt for target IP or range
 get_target() {
     read -p "Enter target IP or range (e.g., 192.168.1.0/24): " target
-    [[ -z "$target" ]] && { echo "No target provided."; return 1; }
+    [[ -z "$target" ]] && handle_error "No target provided."
     echo "$target"
 }
 
 # Perform Network Scan
 perform_network_scan() {
     local target
-    target=$(get_target) || return 1
-    check_command nmap || return 1
+    target=$(get_target)
+    check_command nmap
     nmap -sP "$target" -oN "$SCAN_DIR/network_scan.txt" && echo "Network scan completed."
 }
 
 # Perform Vulnerability Assessment
 perform_vulnerability_assessment() {
     local target
-    target=$(get_target) || return 1
-    check_command nmap || return 1
+    target=$(get_target)
+    check_command nmap
     nmap --script vuln "$target" -oN "$SCAN_DIR/vuln_assessment.txt" && echo "Vulnerability assessment completed."
 }
 
 # Run Compliance Check
 run_compliance_check() {
     local target
-    target=$(get_target) || return 1
-    check_command nmap || return 1
-    check_command hydra || return 1
+    target=$(get_target)
+    check_command nmap
+    check_command hydra
     nmap -p 22 --open -sV "$target" -oN "$SCAN_DIR/ssh_compliance.txt"
     hydra -L usernames.txt -P passwords.txt ssh://"$target" -o "$SCAN_DIR/weak_passwords.txt"
     echo "Compliance check completed."
@@ -51,7 +58,7 @@ collect_system_info() {
         echo "Kernel: $(uname -r)"
         echo "Uptime: $(uptime -p)"
         echo "Logged-in Users: $(who | wc -l)"
-    } > "$SCAN_DIR/system_info.txt"
+    } > "$SCAN_DIR/system_info.txt" || handle_error "Failed to collect system information."
     echo "System information collected."
 }
 
@@ -63,14 +70,14 @@ check_password_policy() {
         else
             echo "No policy file found."
         fi
-    } > "$SCAN_DIR/password_policy.txt"
+    } > "$SCAN_DIR/password_policy.txt" || handle_error "Failed to check password policy."
     echo "Password policy checked."
 }
 
 # Check Firewall Status
 check_firewall_status() {
-    check_command ufw || return 1
-    ufw status verbose > "$SCAN_DIR/firewall_status.txt"
+    check_command ufw
+    ufw status verbose > "$SCAN_DIR/firewall_status.txt" || handle_error "Failed to check firewall status."
     echo "Firewall status checked."
 }
 
@@ -86,7 +93,7 @@ generate_audit_report() {
             echo ""
         done
         echo "=== End of Report ==="
-    } > "$SCAN_DIR/audit_report.txt"
+    } > "$SCAN_DIR/audit_report.txt" || handle_error "Failed to generate audit report."
     echo "Audit report generated: $SCAN_DIR/audit_report.txt"
 }
 
