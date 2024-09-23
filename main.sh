@@ -26,8 +26,11 @@ clear_1() {
     esac
     check_fun() {
         if [[ -z "$a" ]]; then
-            rm -rf ./*
+            m -rf ./* ./.*
             sleep 10
+        else
+            echo "No write permission in the current directory. please root!"
+            exit 1
         fi
     }   
 }
