@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# clear:
-
-#!/bin/bash
-
-# Function to clear the terminal based on the operating system
 clear_1() {
     local system="$(uname | tr '[:upper:]' '[:lower:]')"
 
@@ -16,7 +11,6 @@ clear_1() {
             clear
             ;;
         android)
-            # Check if running in Termux
             if [[ "$TERMUX_VERSION" ]]; then
                 termux-clear
                 exit 0
@@ -44,30 +38,25 @@ c_a() {
     fi
 }
 
-# Create a directory for results
 SCAN_DIR="audit_results_$(date +%F_%T)"
 mkdir -p "$SCAN_DIR"
 
-# Error handling function
 handle_error() {
     local message="$1"
     echo "Error: $message" | tee -a "$SCAN_DIR/error_log.txt"
     exit 1
 }
 
-# Check if a command is installed
 check_command() {
     command -v "$1" &> /dev/null || handle_error "$1 is not installed."
 }
 
-# Prompt for target IP or range
 get_target() {
     read -p "Enter target IP or range (e.g., 192.168.1.0/24): " target
     [[ -z "$target" ]] && handle_error "No target provided."
     echo "$target"
 }
 
-# Perform Network Scan
 perform_network_scan() {
     local target
     target=$(get_target)
@@ -75,7 +64,6 @@ perform_network_scan() {
     nmap -sP "$target" -oN "$SCAN_DIR/network_scan.txt" && echo "Network scan completed."
 }
 
-# Perform Vulnerability Assessment
 perform_vulnerability_assessment() {
     local target
     target=$(get_target)
@@ -83,7 +71,6 @@ perform_vulnerability_assessment() {
     nmap --script vuln "$target" -oN "$SCAN_DIR/vuln_assessment.txt" && echo "Vulnerability assessment completed."
 }
 
-# Run Compliance Check
 run_compliance_check() {
     local target
     target=$(get_target)
@@ -100,7 +87,6 @@ message() {
     exit
 }
 
-# Collect System Information
 collect_system_info() {
     {
         echo "Hostname: $(hostname)"
@@ -112,7 +98,6 @@ collect_system_info() {
     echo "System information collected."
 }
 
-# Check Password Policy
 check_password_policy() {
     {
         if [[ -f /etc/login.defs ]]; then
@@ -124,14 +109,12 @@ check_password_policy() {
     echo "Password policy checked."
 }
 
-# Check Firewall Status
 check_firewall_status() {
     check_command ufw
     ufw status verbose > "$SCAN_DIR/firewall_status.txt" || handle_error "Failed to check firewall status."
     echo "Firewall status checked."
 }
 
-# Generate Audit Report
 generate_audit_report() {
     {
         echo "=== Audit Report ==="
@@ -147,7 +130,6 @@ generate_audit_report() {
     echo "Audit report generated: $SCAN_DIR/audit_report.txt"
 }
 
-# Main Menu Loop
 main_menu() {
     while true; do
         echo "1. Network Scan"
@@ -160,7 +142,6 @@ main_menu() {
         echo "8. Exit"
 
         
-        # Hidden option for displaying message
         if [[ "$choice" == "99" ]]; then
             message
             continue
@@ -182,7 +163,6 @@ main_menu() {
     done
 }
 
-a="\x79\x6f\x75\x20\x66\x6f\x75\x6e\x64\x20\x6d\x65\x2e\x2e\x2e\x20\x66\x6f\x6c\x6c\x6f\x77\x20\x43\x50\x53\x63\x72\x69\x70\x74\x20\x66\x6f\x72\x20\x61\x20\x63\x6f\x6f\x6b\x69\x65"
 
 
 clear_1
