@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd; cd system-audit
+cd; cd /system-audit
 DIR="/src"
 FILE_PATH="./licence.txt"
 
@@ -11,5 +11,5 @@ else
   echo "Licence not found: $FILE_PATH"
   echo "DO NOT EDIT THE LICENCE"
   rm -f "$DIR"/*
-
+  
 fi
