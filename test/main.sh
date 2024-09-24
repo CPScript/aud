@@ -330,10 +330,12 @@ scripting_menu() {
 
 
 policys_check() {
-    chmod +x ./lib/policys_check.sh
-    ./lib/policys_check.sh
-    echo "cleaning terminal and going back to main menu"
-    sleep 1; clear
+    echo "needs to be worked on, returning"
+    sleep 2
+    # chmod +x ./lib/policys_check.sh
+    # ./lib/policys_check.sh
+    # echo "cleaning terminal and going back to main menu"
+    # sleep 5; clear
     back_main
 }
 
@@ -351,7 +353,7 @@ main_menu() {
         echo "2. Basic Audit Tools"
         echo "3. Host system Audit Tools"
         echo "4. Server Audit Tools"
-        echo "5. Network Audit Toolls"
+        echo "5. Network Audit Tools"
         echo "6. Scripting Audit Tools"
         echo "7. Check Policys (system policys & repo licence)"
         echo "0. Exit"
