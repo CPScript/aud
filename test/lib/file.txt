@@ -1,1 +1,0 @@
-<i dont know if this is going to affect error handling, i feel like im making something so simple too complex>
