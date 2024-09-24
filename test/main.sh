@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# i got to merge everything from https://github.com/CPScript/system-audit/main.sh here... this is going to be very easy but im lazy so imma kms
-
 basic_menu() {
     while true; do
         echo "1. Basic NMAP Network Scan"
@@ -32,7 +30,104 @@ basic_menu() {
             10) user_account_audit ;;
             11) group_policy_audit ;;
             0) back ;;
+        esac
+    done
 }
+
+
+handle_error() {
+    local message="$1"
+    echo "Error: $message" | tee -a "$SCAN_DIR/error_log.txt"
+    exit 1
+}
+
+check_command() {
+    command -v "$1" &> /dev/null || handle_error "$1 is not installed."
+}
+
+get_target() {
+    read -p "Enter target IP or range (e.g., 192.168.1.0/24): " target
+    [[ -z "$target" ]] && handle_error "No target provided."
+    echo "$target"
+}
+
+perform_network_scan() {
+    local target
+    target=$(get_target)
+    check_command nmap
+    nmap -sP "$target" -oN "$SCAN_DIR/network_scan.txt" && echo "Network scan completed."
+}
+
+perform_vulnerability_assessment() {
+    local target
+    target=$(get_target)
+    check_command nmap
+    nmap --script vuln "$target" -oN "$SCAN_DIR/vuln_assessment.txt" && echo "Vulnerability assessment completed."
+}
+
+run_compliance_check() {
+    local target
+    target=$(get_target)
+    check_command nmap
+    check_command hydra
+    nmap -p 22 --open -sV "$target" -oN "$SCAN_DIR/ssh_compliance.txt"
+    hydra -L usernames.txt -P passwords.txt ssh://"$target" -o "$SCAN_DIR/weak_passwords.txt"
+    echo "Compliance check completed."
+}
+
+collect_system_info() {
+    {
+        echo "Hostname: $(hostname)"
+        echo "OS: $(uname -o)"
+        echo "Kernel: $(uname -r)"
+        echo "Uptime: $(uptime -p)"
+        echo "Logged-in Users: $(who | wc -l)"
+    } > "$SCAN_DIR/system_info.txt" || handle_error "Failed to collect system information."
+    echo "System information collected."
+}
+
+check_password_policy() {
+    {
+        if [[ -f /etc/login.defs ]]; then
+            grep -E 'PASS_MAX_DAYS|PASS_MIN_DAYS|PASS_WARN_AGE' /etc/login.defs
+        else
+            echo "No policy file found."
+        fi
+    } > "$SCAN_DIR/password_policy.txt" || handle_error "Failed to check password policy."
+    echo "Password policy checked."
+}
+
+check_firewall_status() {
+    check_command ufw
+    ufw status verbose > "$SCAN_DIR/firewall_status.txt" || handle_error "Failed to check firewall status."
+    echo "Firewall status checked."
+}
+
+message() {
+    clear
+    echo -e "$a"
+    exit
+}
+
+generate_audit_report() {
+    {
+        echo "=== Audit Report ==="
+        echo "Generated on: $(date)"
+        echo ""
+        for file in network_scan vuln_assessment ssh_compliance weak_passwords system_info password_policy firewall_status; do
+            echo "=== ${file//_/ } ==="
+            [[ -f "$SCAN_DIR/${file}.txt" ]] && cat "$SCAN_DIR/${file}.txt" || echo "No results found."
+            echo ""
+        done
+        echo "=== End of Report ==="
+    } > "$SCAN_DIR/audit_report.txt" || handle_error "Failed to generate audit report."
+    echo "Audit report generated: $SCAN_DIR/audit_report.txt"
+}
+
+a="\x79\x6f\x75\x20\x66\x6f\x75\x6e\x64\x20\x6d\x65\x2e\x2e\x2e\x20\x66\x6f\x6c\x6c\x6f\x77\x20\x43\x50\x53\x63\x72\x69\x70\x74\x20\x66\x6f\x72\x20\x61\x20\x63\x6f\x6f\x6b\x69\x65"
+
+
+############################### speration line
 
 system_menu() {
     while true; do
@@ -54,7 +149,17 @@ system_menu() {
             5) system_restore_audit ;;
             6) system_update_audit ;;
             0) back ;;
+        esac
+    done
 }
+
+
+
+############################### speration line
+
+
+
+
 
 server_menu() {
     while true; do
@@ -84,7 +189,18 @@ server_menu() {
             9) server_restore_audit ;;
             10) server_update_audit ;;
             0) back ;;
+        esac
+    done
 }
+
+
+
+
+############################### speration line
+
+
+
+
 
 network_menu() {
     while true; do
@@ -114,6 +230,8 @@ network_menu() {
             9) network_access_audit ;;
             10) network_vulnerability_audit ;;
             0) back ;;
+        esac
+    done
 }
 
 scripting_menu() {
@@ -144,12 +262,30 @@ scripting_menu() {
             9) script_deployment_audit ;;
             10) script_maintenance_audit ;;
             0) back ;;
+        esac
+    done
 
 }
+
+
+
+############################### speration line
+
+
+
+
 
 policys_check() {
  echo "hello, world"
 }
+
+
+
+
+############################### speration line
+
+
+
 
 main_menu() {
     while true; do
@@ -162,6 +298,11 @@ main_menu() {
         echo "7. Check Policys (system policys & repo licence)"
         echo "0. Exit"
 
+        if [[ "$choice" == "99" ]]; then
+            message
+            continue
+        fi
+
         read -p "Choose an option [0-6]: " choice
 
         case $choice in
@@ -173,11 +314,13 @@ main_menu() {
             6) scripting_menu
             7) policys_check ;;
             0) exit 0 ;;
+            
             *) echo "Invalid choice. Try again." ;;
         esac
     done
 }
 
-# <New audit functions go here>
 
+clear_1
+c_a
 main_menu
