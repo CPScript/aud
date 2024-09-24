@@ -330,7 +330,11 @@ scripting_menu() {
 
 
 policys_check() {
- echo "hello, world"
+    chmod +x ./lib/policys_check.sh
+    ./lib/policys_check.sh
+    echo "cleaning terminal and going back to main menu"
+    sleep 1; clear
+    back_main
 }
 
 
@@ -365,8 +369,8 @@ main_menu() {
             3) clear; system_menu ;;
             4) clear; server_menu ;;
             5) clear; network_menu ;;
-            6) clear;scripting_menu ;;
-            7) clear;policys_check ;;
+            6) clear; scripting_menu ;;
+            7) clear; policys_check ;;
             0) clear; exit 0 ;;
             
             *) echo "Invalid choice. Try again." ;;
