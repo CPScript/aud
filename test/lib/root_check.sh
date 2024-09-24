@@ -1,4 +1,3 @@
-# taken from another script
 root_check() {
   echo "Checking..."
   sleep 1
