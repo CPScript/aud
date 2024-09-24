@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# i got to merge everything from https://github.com/CPScript/system-audit/main.sh here... this is going to be very easy but im lazy so imma kms
+
 basic_menu() {
     while true; do
         echo "1. Basic NMAP Network Scan"
