@@ -2,44 +2,59 @@
 
 basic_menu() {
     while true; do
+        echo "1. Basic NMAP Network Scan"
+        echo "2. Basic Vulnerability Assessment"
+        echo "3. Basic Compliance Check"
+        echo "4. Host System Information"
+        echo "5. Password Policy Check"
+        echo "6. Check Firewall Status"
+        echo "7. Generate Host Audit Report"
+        echo "8. Host Hardware Inventory Audit"
+        echo "9. Software Inventory Audit"
+        echo "10. User Account Audit"
+        echo "11. Group Policy Audit"
+        echo "0. Back"
 }
 
 system_menu() {
     while true; do
-        echo "12. Host System Configuration Audit"
-        echo "13. Host System Performance Audit"
-        echo "14. Host System Security Audit"
-        echo "15. Host System Backup Audit"
-        echo "16. Host System Restore Audit"
-        echo "17. Host System Update Audit"
+        echo "1. Host System Configuration Audit"
+        echo "2. Host System Performance Audit"
+        echo "3. Host System Security Audit"
+        echo "4. Host System Backup Audit"
+        echo "5. Host System Restore Audit"
+        echo "6. Host System Update Audit"
+        echo "0. Back"
 }
 
 server_menu() {
     while true; do
-        echo "18. Server Hardware Inventory Audit"
-        echo "19. Server Software Inventory Audit"
-        echo "20. Server User Account Audit"
-        echo "21. Server Group Policy Audit"
-        echo "22. Server Configuration Audit"
-        echo "23. Server Performance Audit"
-        echo "24. Server Security Audit"
-        echo "25. Server Backup Audit"
-        echo "26. Server Restore Audit"
-        echo "27. Server Update Audit"
+        echo "1. Server Hardware Inventory Audit"
+        echo "2. Server Software Inventory Audit"
+        echo "3. Server User Account Audit"
+        echo "4. Server Group Policy Audit"
+        echo "5. Server Configuration Audit"
+        echo "6. Server Performance Audit"
+        echo "7. Server Security Audit"
+        echo "8. Server Backup Audit"
+        echo "9. Server Restore Audit"
+        echo "10. Server Update Audit"
+        echo "0. Back"
 }
 
 network_menu() {
     while true; do
-        echo "28. Network Topology Audit"
-        echo "29. Network Device Audit"
-        echo "30. Network Configuration Audit"
-        echo "31. Network Performance Audit"
-        echo "32. Network Security Audit"
-        echo "33. Network Traffic Audit"
-        echo "34. Network Protocol Audit"
-        echo "35. Network Service Audit"
-        echo "36. Network Access Audit"
-        echo "37. Network Vulnerability Audit"
+        echo "1. Network Topology Audit"
+        echo "2. Network Device Audit"
+        echo "3. Network Configuration Audit"
+        echo "4. Network Performance Audit"
+        echo "5. Network Security Audit"
+        echo "6. Network Traffic Audit"
+        echo "7. Network Protocol Audit"
+        echo "8. Network Service Audit"
+        echo "9. Network Access Audit"
+        echo "10. Network Vulnerability Audit"
+        echo "0. Back"
 }
 
 scripting_menu() {
@@ -54,26 +69,24 @@ scripting_menu() {
         echo "45. Script Testing Audit"
         echo "46. Script Deployment Audit"
         echo "47. Script Maintenance Audit"
+        echo "0. Back"
 }
 
 main_menu() {
     while true; do
-        echo "1. Basic NMAP Network Scan"
-        echo "2. Basic Vulnerability Assessment"
-        echo "3. Basic Compliance Check"
-        echo "4. Host System Information"
-        echo "5. Password Policy Check"
-        echo "6. Check Firewall Status"
-        echo "7. Generate Host Audit Report"
-        echo "8. Host Hardware Inventory Audit"
-        echo "9. Software Inventory Audit"
-        echo "10. User Account Audit"
-        echo "11. Group Policy Audit"
-        echo "48. Exit"
+        echo "1. Check If Rooted?"
+        echo "2. Basic Audit Tools"
+        echo "3. Host system Audit Tools"
+        echo "4. Server Audit Tools"
+        echo "4. Network Audit Toolls"
+        echo "5. Scripting Audit Tools"
+        echo "6. Check Policys (system policys & repo licence)"
+        
+        echo "0. Exit"
 
-        read -p "Choose an option [1-48]: " choice
+        read -p "Choose an option [0-5]: " choice # add to the rest of functions
 
-        case $choice in
+        case $choice in # need to organize to functions!
             1) perform_network_scan ;;
             2) perform_vulnerability_assessment ;;
             3) run_compliance_check ;;
