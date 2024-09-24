@@ -12,3 +12,5 @@ root_check() {
   echo "Rooted, Thank you for such. Continuing"
   sleep 1
 }
+
+root_check
