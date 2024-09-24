@@ -1,5 +1,13 @@
 #!/bin/bash
 
+check_root() {
+    chmod +x ./lib/root_check.sh
+    ./lib/root_check.sh
+    echo "cleaning terminal and going back to main menu"
+    sleep 1; clear
+    back_main
+}
+
 clear_1() {
     local system="$(uname | tr '[:upper:]' '[:lower:]')"
 
@@ -41,7 +49,7 @@ c_a() {
     fi
 }
 
-SCAN_DIR="audit_results_$(date +%F_%T)"
+SCAN_DIR="reports/audit_results_$(date +%F_%T)"
 mkdir -p "$SCAN_DIR"
 
 handle_error() {
@@ -119,6 +127,9 @@ message() {
 }
 
 generate_audit_report() {
+    mkdir -p ./reports     # Create the dir if it doesn't exist
+    REPORT_FILE="./reports/audit_report.txt"
+
     {
         echo "=== Audit Report ==="
         echo "Generated on: $(date)"
@@ -129,8 +140,8 @@ generate_audit_report() {
             echo ""
         done
         echo "=== End of Report ==="
-    } > "$SCAN_DIR/audit_report.txt" || handle_error "Failed to generate audit report."
-    echo "Audit report generated: $SCAN_DIR/audit_report.txt"
+    } > "$REPORT_FILE" || handle_error "Failed to generate audit report."
+    echo "Audit report generated: $REPORT_FILE"
 }
 
 basic_menu() {
@@ -349,20 +360,23 @@ main_menu() {
         read -p "Choose an option [0-6]: " choice
 
         case $choice in
-            1) check_root ;;
-            2) basic_menu ;;
-            3) system_menu ;;
-            4) server_menu ;;
-            5) network_menu ;;
-            6) scripting_menu
-            7) policys_check ;;
-            0) exit 0 ;;
+            1) clear; check_root ;;
+            2) clear; basic_menu ;;
+            3) clear; system_menu ;;
+            4) clear; server_menu ;;
+            5) clear; network_menu ;;
+            6) clear;scripting_menu ;;
+            7) clear;policys_check ;;
+            0) clear; exit 0 ;;
             
             *) echo "Invalid choice. Try again." ;;
         esac
     done
 }
 
+back_main() {
+    main_menu
+}
 
 clear_1
 c_a
