@@ -210,6 +210,7 @@ sys_backup_audit() {
     sys_backup "$@"
 }
 sys_restore_audit() {
+    clear; echo "checking for root"
     source "lib/host.sh"
     sys_restore "$@"
 }
