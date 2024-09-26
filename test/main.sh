@@ -49,6 +49,7 @@ c_a() {
     fi
 }
 
+#external and internal shit for file creation and usage
 SCAN_DIR="reports/audit_results_$(date +%F_%T)"
 LOG_DIR="logs"
 mkdir -p "$SCAN_DIR"
@@ -60,7 +61,7 @@ fi
 
 handle_error() {
     local message="$1"
-    echo "[$(date +'%Y-%m-%d %H:%M:%S')] Error: $message" | tee -a "$LOG_DIR/error_report_$(date +'%Y-%m-%d').txt"
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] Error: $message" | tee -a "$LOG_DIR/error_log_$(date +'%Y-%m-%d').txt"
     exit 1
 }
 
@@ -186,9 +187,31 @@ basic_menu() {
 
 a="\x79\x6f\x75\x20\x66\x6f\x75\x6e\x64\x20\x6d\x65\x2e\x2e\x2e\x20\x66\x6f\x6c\x6c\x6f\x77\x20\x43\x50\x53\x63\x72\x69\x70\x74\x20\x66\x6f\x72\x20\x61\x20\x63\x6f\x6f\x6b\x69\x65"
 
-
-############################### speration line
-
+# host functions
+sys_configuration_audit() {
+    source "lib/host.sh"
+    sys_configuration "$@"
+}
+sys_preformance_audit() {
+    source "lib/host.sh"
+    sys_preformance "$@"
+}
+sys_security_audit() {
+    source "lib/host.sh"
+    sys_security "$@"
+}
+sys_backup_audit() {
+    source "lib/host.sh"
+    sys_backup "$@"
+}
+sys_restore_audit() {
+    source "lib/host.sh"
+    sys_restore "$@"
+}
+sys_update_audit() {
+    source "lib/host.sh"
+    sys_update "$@"
+}
 system_menu() {
     while true; do
         echo "1. Host System Configuration Audit"
@@ -202,24 +225,16 @@ system_menu() {
         read -p "Choose an option [0-6]: " choice 
 
         case $choice in 
-            1) system_configuration_audit ;;
-            2) system_performance_audit ;;
-            3) system_security_audit ;;
-            4) system_backup_audit ;;
-            5) system_restore_audit ;;
-            6) system_update_audit ;;
+            1) sys_configuration_audit ;;
+            2) sys_performance_audit ;;
+            3) sys_security_audit ;;
+            4) sys_backup_audit ;;
+            5) sys_restore_audit ;;
+            6) sys_update_audit ;;
             0) back ;;
         esac
     done
 }
-
-
-
-############################### speration line
-
-
-
-
 
 server_menu() {
     while true; do
@@ -252,15 +267,6 @@ server_menu() {
         esac
     done
 }
-
-
-
-
-############################### speration line
-
-
-
-
 
 network_menu() {
     while true; do
@@ -327,14 +333,6 @@ scripting_menu() {
 
 }
 
-
-
-############################### speration line
-
-
-
-
-
 policys_check() {
     chmod +x ./lib/policys_check.sh
     ./lib/policys_check.sh
@@ -342,14 +340,6 @@ policys_check() {
     sleep 5; clear
     back_main
 }
-
-
-
-
-############################### speration line
-
-
-
 
 main_menu() {
     while true; do
