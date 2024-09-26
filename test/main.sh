@@ -1,5 +1,9 @@
 #!/bin/bash
 
+back_main() {
+    main_menu
+}
+
 check_root() {
     chmod +x ./lib/root_check.sh
     ./lib/root_check.sh
@@ -50,11 +54,11 @@ c_a() {
 }
 
 #external and internal shit for file creation and usage
-SCAN_DIR="reports/audit_results_$(date +%F_%T)"
+SCAN_DIR="lib/reports/audit_results_$(date +%F_%T)"
 LOG_DIR="logs"
 mkdir -p "$SCAN_DIR"
 
-# Create the log directory if it doesn't exist
+# Create the log directory if there is none
 if [ ! -d "$LOG_DIR" ]; then
     mkdir "$LOG_DIR"
 fi
@@ -180,7 +184,7 @@ basic_menu() {
             9) software_inventory_audit ;;
             10) user_account_audit ;;
             11) group_policy_audit ;;
-            0) back ;;
+            0) back_main ;;
         esac
     done
 }
@@ -231,7 +235,7 @@ system_menu() {
             4) sys_backup_audit ;;
             5) sys_restore_audit ;;
             6) sys_update_audit ;;
-            0) back ;;
+            0) back_main ;;
         esac
     done
 }
@@ -263,7 +267,7 @@ server_menu() {
             8) server_backup_audit ;;
             9) server_restore_audit ;;
             10) server_update_audit ;;
-            0) back ;;
+            0) back_main ;;
         esac
     done
 }
@@ -295,7 +299,7 @@ network_menu() {
             8) network_service_audit ;;
             9) network_access_audit ;;
             10) network_vulnerability_audit ;;
-            0) back ;;
+            0) back_main ;;
         esac
     done
 }
@@ -327,7 +331,7 @@ scripting_menu() {
             8) script_testing_audit ;;
             9) script_deployment_audit ;;
             10) script_maintenance_audit ;;
-            0) back ;;
+            0) back_main ;;
         esac
     done
 
@@ -372,10 +376,6 @@ main_menu() {
             *) echo "Invalid choice. Try again." ;;
         esac
     done
-}
-
-back_main() {
-    main_menu
 }
 
 clear_1
