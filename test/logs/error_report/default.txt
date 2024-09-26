@@ -1,1 +1,1 @@
-errors will be sent here and logged by the script
+errors logged by the script will be made here!
