@@ -1,7 +1,8 @@
-This Bash script is designed to perform a detailed system audit, allowing users to assess network security, check for vulnerabilities, and verify compliance with security policies. The script organizes the results into a structured directory, making it easy to review findings.
+this is no longer just a single script :P
 
 ## Features
 
+### Basic Audit(s):
 - **Network Scan**: Performs a ping sweep on a specified IP range.
 - **Vulnerability Assessment**: Checks for vulnerabilities using `nmap` scripts.
 - **Compliance Check**: Examines SSH compliance and tests for weak passwords using `hydra`.
@@ -9,6 +10,15 @@ This Bash script is designed to perform a detailed system audit, allowing users 
 - **Password Policy Check**: Reviews the password policy settings on the system.
 - **Firewall Status Check**: Reports the status of the firewall using `ufw`.
 - **Audit Report Generation**: Compiles all findings into a neatly formatted report.
+
+### Host system Audit(s):
+- **System Configuration**:
+- **System Performance**:
+- **System security**:
+- **System Backup**:
+- **System Restore**:
+- **System Update**:
+
 
 ## required dependencies 
 
