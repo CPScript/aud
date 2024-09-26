@@ -58,7 +58,8 @@ sys_configuration() {
         echo "-------------------"
         echo "$(systemctl list-units --type=service)"
     ) | tee -a "$report_file"
-
+   
+    clear
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] System configuration report generated successfully!"
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Report file: $report_file"
 }
@@ -121,6 +122,7 @@ sys_preformance() {
         echo "$(df -i)"
     ) | tee -a "$report_file"
 
+    clear
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] System performance audit generated successfully!"
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Report file: $report_file"
 }
@@ -191,6 +193,7 @@ sys_security() {
         echo "$(netstat -tlnp)"
     ) | tee -a "$report_file"
 
+    clear
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] System security audit generated successfully!"
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Report file: $report_file"
 }
@@ -223,6 +226,7 @@ create_backup() {
         tar -tf "$backup_file"
     ) | tee -a "$report_file"
 
+    clear
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Backup audit report generated successfully!"
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Report file: $report_file"
 }
@@ -330,6 +334,7 @@ sys_restore(){
         systemctl list-units --state=failed
     ) | tee -a "$report_file"
 
+    clear
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] System restoration audit report generated successfully!"
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Report file: $report_file" 
 }
@@ -408,6 +413,7 @@ sys_update() {
         echo "sudo apt-get install --only-upgrade linux-image-generic"
     ) | tee -a "$report_file"
 
+    clear
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] System updatable audit report generated successfully!"
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Report file: $report_file"
 }
