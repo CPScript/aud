@@ -200,7 +200,12 @@ create_backup() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Report file: $report_file"
 }
 
-sys_backup() {    
+sys_backup() { 
+    sleep 3
+    if [ "$(id -u)" != "0" ]; then
+        echo "Error: This script must be run as root."
+        exit 1
+    fi   
 
     # Check if a backup exists
     if [ -d "$SCAN_DIR" ]; then
