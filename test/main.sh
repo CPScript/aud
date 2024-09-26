@@ -194,11 +194,11 @@ a="\x79\x6f\x75\x20\x66\x6f\x75\x6e\x64\x20\x6d\x65\x2e\x2e\x2e\x20\x66\x6f\x6c\
 # host functions
 sys_configuration_audit() {
     source "lib/host.sh"
-    sys_configuration "$@"
+    sys_configuration
 }
 sys_preformance_audit() {
     source "lib/host.sh"
-    sys_preformance "$@"
+    sys_preformance
 }
 sys_security_audit() {
     source "lib/host.sh"
@@ -230,7 +230,7 @@ system_menu() {
 
         case $choice in 
             1) sys_configuration_audit ;;
-            2) sys_performance_audit ;;
+            2) sys_preformance_audit ;;
             3) sys_security_audit ;;
             4) sys_backup_audit ;;
             5) sys_restore_audit ;;
