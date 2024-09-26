@@ -2,7 +2,14 @@
 
 mkdir -p "$SCAN_DIR"
 
+
 sys_configuration() {
+    if [ -n "$PREFIX" ]; then
+        echo "Error: This script is not compatible with Termux."
+        echo "Please run this script on a native Linux system."
+        exit 1
+    fi
+    
     report_file="$SCAN_DIR/system_configuration_report_$(date +%F_%T).txt"
     (
         echo "System CONFIGURATION Report"
@@ -57,6 +64,12 @@ sys_configuration() {
 }
 
 sys_preformance() {
+    if [ -n "$PREFIX" ]; then
+        echo "Error: This script is not compatible with Termux."
+        echo "Please run this script on a native Linux system."
+        exit 1
+    fi
+
     report_file="$SCAN_DIR/system_performance_audit_$(date +%F_%T).txt"
     (
         echo "System PREFORMANCE Report"
@@ -113,6 +126,12 @@ sys_preformance() {
 }
 
 sys_security() {
+    if [ -n "$PREFIX" ]; then
+        echo "Error: This script is not compatible with Termux."
+        echo "Please run this script on a native Linux system."
+        exit 1
+    fi
+
     report_file="$SCAN_DIR/system_security_audit_$(date +%F_%T).txt"
     (
         echo "System SECURITY Report"
@@ -177,6 +196,12 @@ sys_security() {
 }
 
 create_backup() {
+    if [ -n "$PREFIX" ]; then
+        echo "Error: This script is not compatible with Termux."
+        echo "Please run this script on a native Linux system."
+        exit 1
+    fi
+
     echo ""
     echo "Creating a new backup..."
     sleep 5
@@ -203,6 +228,12 @@ create_backup() {
 }
 
 sys_backup() { 
+    if [ -n "$PREFIX" ]; then
+        echo "Error: This script is not compatible with Termux."
+        echo "Please run this script on a native Linux system."
+        exit 1
+    fi
+
     sleep 3
     if [ "$(id -u)" != "0" ]; then
         echo "Error: This script must be run as root."
@@ -226,6 +257,11 @@ sys_backup() {
 }
 
 sys_restore(){
+    if [ -n "$PREFIX" ]; then
+        echo "Error: This script is not compatible with Termux."
+        echo "Please run this script on a native Linux system."
+        exit 1
+    fi
 
     if [ "$(id -u)" != "0" ]; then
         echo "Error: This script must be run as root."
@@ -298,6 +334,12 @@ sys_restore(){
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Report file: $report_file" 
 }
 sys_update() {
+    if [ -n "$PREFIX" ]; then
+        echo "Error: This script is not compatible with Termux."
+        echo "Please run this script on a native Linux system."
+        exit 1
+    fi
+
     echo "System UPDATE Check"
     echo "====================="
 
