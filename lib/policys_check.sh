@@ -1,6 +1,5 @@
 #!/bin/bash
-cd; cd /system-audit
-DIR="/src"
+DIR="/lib/doc"
 FILE_PATH="./licence.txt"
 
 if [ -f "$FILE_PATH" ]; then
