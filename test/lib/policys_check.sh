@@ -1,5 +1,4 @@
 #!/bin/bash
-
 cd; cd /system-audit
 DIR="/src"
 FILE_PATH="./licence.txt"
