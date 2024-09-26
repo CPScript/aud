@@ -205,6 +205,7 @@ sys_security_audit() {
     sys_security "$@"
 }
 sys_backup_audit() {
+    clear; echo "checking for root"
     source "lib/host.sh"
     sys_backup "$@"
 }
