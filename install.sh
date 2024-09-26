@@ -12,6 +12,8 @@ install_darwin() {
 }
 
 install_android() {
+    echo "Since your on android you will only able to use basic scripts... loading in 5 seconds"
+    sleep 6
     echo "Installing on Android (Termux)..."
     pkg install -y nmap hydra
 }
