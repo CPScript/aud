@@ -50,11 +50,17 @@ c_a() {
 }
 
 SCAN_DIR="reports/audit_results_$(date +%F_%T)"
+LOG_DIR="logs"
 mkdir -p "$SCAN_DIR"
+
+# Create the log directory if it doesn't exist
+if [ ! -d "$LOG_DIR" ]; then
+    mkdir "$LOG_DIR"
+fi
 
 handle_error() {
     local message="$1"
-    echo "Error: $message" | tee -a "$SCAN_DIR/error_log.txt"
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] Error: $message" | tee -a "$LOG_DIR/error_report_$(date +'%Y-%m-%d').txt"
     exit 1
 }
 
@@ -330,12 +336,10 @@ scripting_menu() {
 
 
 policys_check() {
-    echo "needs to be worked on, returning"
-    sleep 2
-    # chmod +x ./lib/policys_check.sh
-    # ./lib/policys_check.sh
-    # echo "cleaning terminal and going back to main menu"
-    # sleep 5; clear
+    chmod +x ./lib/policys_check.sh
+    ./lib/policys_check.sh
+    echo "cleaning terminal and going back to main menu"
+    sleep 5; clear
     back_main
 }
 
