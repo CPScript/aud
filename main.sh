@@ -1,6 +1,6 @@
 #!/bin/bash
-
 back_main() {
+    clear
     main_menu
 }
 
