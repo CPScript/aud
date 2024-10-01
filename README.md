@@ -1,4 +1,4 @@
-this is no longer just a single script :P
+still under development
 
 ## Features
 
